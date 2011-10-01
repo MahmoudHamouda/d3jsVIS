@@ -80,12 +80,6 @@ d3.csv("stocks.csv", function(data) {
   // Sort by maximum price, descending.
   symbols.sort(function(a, b) { return b.maxPrice - a.maxPrice; });
 
-  // Compute the minimum and maximum date across symbols.
-  x.domain([
-    d3.min(symbols, function(d) { return d.values[0].date; }),
-    d3.max(symbols, function(d) { return d.values[d.values.length - 1].date; })
-  ]);
-
   var g = svg.selectAll("g")
       .data(symbols)
     .enter().append("svg:g")
@@ -96,6 +90,12 @@ d3.csv("stocks.csv", function(data) {
 
 function lines() {
   x = d3.time.scale().range([0, w - 60]);
+
+  // Compute the minimum and maximum date across symbols.
+  x.domain([
+    d3.min(symbols, function(d) { return d.values[0].date; }),
+    d3.max(symbols, function(d) { return d.values[d.values.length - 1].date; })
+  ]);
 
   var g = svg.selectAll(".symbol")
       .attr("transform", function(d, i) { return "translate(0," + i * h / 4 + ")"; });
