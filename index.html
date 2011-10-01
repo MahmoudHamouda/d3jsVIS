@@ -27,7 +27,7 @@ var m = [20, 20, 30, 20],
     h = 500 - m[0] - m[2];
 
 var x,
-    y = d3.scale.linear().range([h / 4 - 20, 0]),
+    y,
     duration = 1500,
     delay = 500;
 
@@ -90,6 +90,7 @@ d3.csv("stocks.csv", function(data) {
 
 function lines() {
   x = d3.time.scale().range([0, w - 60]);
+  y = d3.scale.linear().range([h / 4 - 20, 0]);
 
   // Compute the minimum and maximum date across symbols.
   x.domain([
