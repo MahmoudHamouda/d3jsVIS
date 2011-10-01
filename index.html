@@ -58,7 +58,6 @@ var axis = d3.svg.line()
 var area = d3.svg.area()
     .interpolate("basis")
     .x(function(d) { return x(d.date); })
-    .y0(h / 4 - 20)
     .y1(function(d) { return y(d.price); });
 
 d3.csv("stocks.csv", function(data) {
@@ -157,6 +156,9 @@ function horizons() {
 
   var g = svg.selectAll(".symbol")
       .attr("clip-path", "url(#clip)");
+
+  area
+      .y0(h / 4 - 20);
 
   g.select("circle").transition()
       .duration(duration)
