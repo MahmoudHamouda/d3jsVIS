@@ -1,0 +1,1 @@
+The first 15 seconds of the D3 show reel. See full video at <http://vimeo.com/29862153>.
