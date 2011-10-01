@@ -572,7 +572,8 @@ function donutExplode() {
   }
 
   setTimeout(function() {
-    svg.selectAll(".symbol").selectAll("*").remove();
+    svg.selectAll("*").remove();
+    svg.selectAll("g").data(symbols).enter().append("svg:g").attr("class", "symbol");
     lines();
   }, duration);
 }
