@@ -22,7 +22,7 @@ svg {
   <body>
     <script type="text/javascript">
 
-var m = [20, 20, 20, 20],
+var m = [20, 20, 30, 20],
     w = 960 - m[1] - m[3],
     h = 500 - m[0] - m[2];
 
@@ -98,7 +98,7 @@ function lines() {
   ]);
 
   var g = svg.selectAll(".symbol")
-      .attr("transform", function(d, i) { return "translate(0," + i * h / 4 + ")"; });
+      .attr("transform", function(d, i) { return "translate(0," + (i * h / 4 + 10) + ")"; });
 
   g.each(function(d) {
     var e = d3.select(this);
@@ -572,7 +572,7 @@ function donutExplode() {
   }
 
   setTimeout(function() {
-    svg.selectAll(".symbol").html(null);
+    svg.selectAll(".symbol").selectAll("*").remove();
     lines();
   }, duration);
 }
