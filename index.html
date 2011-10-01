@@ -7,6 +7,10 @@
     <script type="text/javascript" src="http://mbostock.github.com/d3/d3.time.js?2.3.0"></script>
     <style type="text/css">
 
+svg {
+  font-family: "Helvetica Neue", Helvetica;
+}
+
 .line {
   fill: none;
   stroke: #000;
@@ -22,7 +26,7 @@ var m = [20, 20, 20, 20],
     w = 960 - m[1] - m[3],
     h = 500 - m[0] - m[2];
 
-var x = d3.time.scale().range([0, w - 60]),
+var x,
     y = d3.scale.linear().range([h / 4 - 20, 0]),
     duration = 1500,
     delay = 500;
@@ -91,6 +95,7 @@ d3.csv("stocks.csv", function(data) {
 });
 
 function lines() {
+  x = d3.time.scale().range([0, w - 60]);
 
   var g = svg.selectAll(".symbol")
       .attr("transform", function(d, i) { return "translate(0," + i * h / 4 + ")"; });
@@ -565,6 +570,11 @@ function donutExplode() {
       };
     }
   }
+
+  setTimeout(function() {
+    svg.selectAll(".symbol").html(null);
+    lines();
+  }, duration);
 }
 
     </script>
