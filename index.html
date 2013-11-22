@@ -1,11 +1,6 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.js?2.3.0"></script>
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.csv.js?2.3.0"></script>
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.layout.js?2.3.0"></script>
-    <script type="text/javascript" src="http://mbostock.github.com/d3/d3.time.js?2.3.0"></script>
-    <style type="text/css">
+<meta charset="utf-8">
+<style type="text/css">
 
 svg {
   font-family: "Helvetica Neue", Helvetica;
@@ -17,10 +12,10 @@ svg {
   stroke-width: 2px;
 }
 
-    </style>
-  </head>
-  <body>
-    <script type="text/javascript">
+</style>
+<body>
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script>
 
 var m = [20, 20, 30, 20],
     w = 960 - m[1] - m[3],
@@ -33,10 +28,10 @@ var x,
 
 var color = d3.scale.category10();
 
-var svg = d3.select("body").append("svg:svg")
+var svg = d3.select("body").append("svg")
     .attr("width", w + m[1] + m[3])
     .attr("height", h + m[0] + m[2])
-  .append("svg:g")
+  .append("g")
     .attr("transform", "translate(" + m[3] + "," + m[0] + ")");
 
 var stocks,
@@ -81,7 +76,7 @@ d3.csv("stocks.csv", function(data) {
 
   var g = svg.selectAll("g")
       .data(symbols)
-    .enter().append("svg:g")
+    .enter().append("g")
       .attr("class", "symbol");
 
   setTimeout(lines, duration);
@@ -103,16 +98,16 @@ function lines() {
   g.each(function(d) {
     var e = d3.select(this);
 
-    e.append("svg:path")
+    e.append("path")
         .attr("class", "line");
 
-    e.append("svg:circle")
+    e.append("circle")
         .attr("r", 5)
         .style("fill", function(d) { return color(d.key); })
         .style("stroke", "#000")
         .style("stroke-width", "2px");
 
-    e.append("svg:text")
+    e.append("text")
         .attr("x", 12)
         .attr("dy", ".31em")
         .text(d.key);
@@ -144,10 +139,10 @@ function lines() {
 }
 
 function horizons() {
-  svg.insert("svg:defs", ".symbol")
-    .append("svg:clipPath")
+  svg.insert("defs", ".symbol")
+    .append("clipPath")
       .attr("id", "clip")
-    .append("svg:rect")
+    .append("rect")
       .attr("width", w)
       .attr("height", h / 4 - 20);
 
@@ -175,7 +170,7 @@ function horizons() {
 
     d3.select(this).selectAll(".area")
         .data(d3.range(3))
-      .enter().insert("svg:path", ".line")
+      .enter().insert("path", ".line")
         .attr("class", "area")
         .attr("transform", function(d) { return "translate(0," + (d * (h / 4 - 20)) + ")"; })
         .attr("d", area(d.values))
@@ -347,7 +342,7 @@ function overlappingArea() {
       .attr("dy", ".31em")
       .attr("transform", function(d) { d = d.values[d.values.length - 1]; return "translate(" + (w - 60) + "," + y(d.price) + ")"; });
 
-  svg.append("svg:line")
+  svg.append("line")
       .attr("class", "line")
       .attr("x1", 0)
       .attr("x2", w - 60)
@@ -386,7 +381,7 @@ function groupedBar() {
   g.each(function(p, j) {
     d3.select(this).selectAll("rect")
         .data(function(d) { return d.values; })
-      .enter().append("svg:rect")
+      .enter().append("rect")
         .attr("x", function(d) { return x(d.date) + x1(p.key); })
         .attr("y", function(d) { return y(d.price); })
         .attr("width", x1.rangeBand())
@@ -495,7 +490,7 @@ function donut() {
 
   var arc = d3.svg.arc();
 
-  g.append("svg:path")
+  g.append("path")
       .style("fill", function(d) { return color(d.key); })
       .data(function() { return pie(symbols); })
     .transition()
@@ -576,11 +571,9 @@ function donutExplode() {
 
   setTimeout(function() {
     svg.selectAll("*").remove();
-    svg.selectAll("g").data(symbols).enter().append("svg:g").attr("class", "symbol");
+    svg.selectAll("g").data(symbols).enter().append("g").attr("class", "symbol");
     lines();
   }, duration);
 }
 
-    </script>
-  </body>
-</html>
+</script>
